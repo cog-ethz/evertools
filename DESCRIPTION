@@ -1,0 +1,15 @@
+Package: evertools
+Title: EVE R Tools 
+Version: 0.0.0.9000
+Authors@R: person("Jascha", "Gruebel", email = "jgruebel@student.ethz.ch", role = c("aut", "cre"))
+Description: This package simplifies access to EVE's database and provides simple analytical tools for experiment evaluation.
+Depends: R (>= 3.3.1)
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Imports:
+    DBI,
+    dplyr,
+    ggplot2,
+    RMySQL
+RoxygenNote: 5.0.1.9000
