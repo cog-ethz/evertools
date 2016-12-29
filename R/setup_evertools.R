@@ -10,7 +10,7 @@
 #' @examples 
 #' setup_evertools()
 #' 
-setup_evertools <- function(db="mysql"){
+setup_evertools <- function(db="mysql",dbname = "neighborhood_walk", host = "localhost", user = "svictor", password = "vicDB4study.", port = 3306){
   library(DBI, warn.conflicts = FALSE,quietly = TRUE)
   if(db=="mysql"){
     library(RMySQL, warn.conflicts = FALSE,quietly = TRUE)
@@ -20,7 +20,7 @@ setup_evertools <- function(db="mysql"){
   }
   library(dplyr, warn.conflicts = FALSE,quietly = TRUE)
   library(ggplot2, warn.conflicts = FALSE,quietly = TRUE)
-  my_db = src_mysql(dbname = "neighborhood_walk", host = "localhost", user = "svictor", password = "vicDB4study.", port = 3306)
+  my_db = src_mysql(dbname = dbname, host = host, user = user, password = password, port = port)
   #data <- tbl(my_db,sql("SELECT * FROM neighborhood_walk.store_positions WHERE session_id = \"1\" AND scene_id = \"0\""))
   return(my_db)
 }

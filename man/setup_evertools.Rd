@@ -4,7 +4,9 @@
 \alias{setup_evertools}
 \title{Setup EVE R Tools}
 \usage{
-setup_evertools(db = "mysql")
+setup_evertools(db = "mysql", dbname = "neighborhood_walk",
+  host = "localhost", user = "svictor", password = "vicDB4study.",
+  port = 3306)
 }
 \arguments{
 \item{db}{Type of database. Defaults to "mysql".}

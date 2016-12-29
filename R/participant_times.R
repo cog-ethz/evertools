@@ -64,8 +64,10 @@ get_participants_duration <- function(db, session.ids = c(1), scene.id = 0){
   session_id <- session.ids
   scene_id <- rep(scene.id, times = length(session.ids))
   duration <- vector(length = length(session.ids))
+  iter <- 1
   for (id in session_id) {
-    duration[id] <- get_participant_duration(db,session.id = id, scene.id = scene.id)
+    duration[iter] <- get_participant_duration(db,session.id = id, scene.id = scene.id)
+    iter <- iter + 1
   }
   durations <- data.frame(scene_id,session_id,duration)
   return(durations)

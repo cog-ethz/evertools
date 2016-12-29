@@ -41,8 +41,10 @@ get_participants_path_length <- function(db, session.ids = c(1), scene.id = 0){
   session_id <- session.ids
   scene_id <- rep(scene.id, times = length(session.ids))
   path_length <- vector(length = length(session.ids))
+  iter <- 1
   for (id in session_id) {
-    path_length[id] <- get_participant_path_length(db,session.id = id, scene.id = scene.id)
+    path_length[iter] <- get_participant_path_length(db,session.id = id, scene.id = scene.id)
+    iter <- iter + 1
   }
   paths <- data.frame(scene_id,session_id,path_length)
   return(paths)
