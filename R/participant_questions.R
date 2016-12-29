@@ -4,7 +4,6 @@
 #' the database. The evaluation is lazy and this data can be
 #' used as input for further remote computations.
 #' 
-#' Note: Does not work with text answers
 #' @param db dyplr database handle
 #' @param session.id session from which to load data
 #' @param question.name name of question as identified in xml
@@ -37,6 +36,41 @@ get_participant_bool_answers <-function(db,session.id=45,question.name="socDem1"
   
   result <- left_join(bool_answers,question_options_text,c("pos" = "pos")) %>%
     select(session_id,question_id,name,label,val)
+  
+  return(result)
+}
+
+#' Get Participant Textbox Answer
+#'
+#' This function extracts a participant's answer from
+#' the database. The evaluation is lazy and this data can be
+#' used as input for further remote computations.
+#' 
+#' Note: Converts to integer, numeric or string
+#' @param db dyplr database handle
+#' @param session.id session from which to load data
+#' @param question.name name of question as identified in xml
+#' @keywords session, database, lazy, questionnaire
+#' @export
+#' @return question and answer of participant
+#' @examples
+#' question <- get_participants_answer(db,session.id = 45,question.name="socDem2")
+#' 
+get_participant_textbox_answer<-function(db,session.id=45,question.name="socDem2"){
+  
+  #Get Tables
+  answer_ids <- get_participant_answers_ids(db,session.id=session.id)
+  answers_stored_strings <- db %>% tbl("answers_stored_strings")
+  questions <- db %>% tbl("questions") %>% filter(name == question.name)
+  store_strings <- db %>% tbl("store_strings")
+  
+  #Get Integer Value
+  answer_id <- left_join(answer_ids,answers_stored_strings,by = c("answer_id" = "answer_id")) %>%
+    select(answer_id,session_id,question_id,string_id)
+  text_id <- left_join(questions %>% rename(question_id =id),answer_id,c("question_id" = "question_id"))
+  result <- left_join(text_id,store_strings %>% rename(string_id =id),c("string_id" = "string_id")) %>% 
+    select(session_id,question_id,name,val) %>% collect () %>%
+    mutate_each(funs(type.convert(as.character(.)))) #finds optimal type for characters
   
   return(result)
 }
