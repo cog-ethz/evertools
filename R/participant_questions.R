@@ -11,7 +11,7 @@
 #' @export
 #' @return question and answer of participant
 #' @examples
-#' question <- get_participants_answer(db,session.id = 45,question.name="socDem1")
+#' question <- get_participant_bool_answers(db,session.id = 45,question.name="socDem1")
 #' 
 get_participant_bool_answers <-function(db,session.id=45,question.name="socDem1"){
   
@@ -37,6 +37,35 @@ get_participant_bool_answers <-function(db,session.id=45,question.name="socDem1"
   result <- left_join(bool_answers,question_options_text,c("pos" = "pos")) %>%
     select(session_id,question_id,name,label,val)
   
+  return(result)
+}
+
+#' Get Participants Boolean Answer
+#'
+#' This function extracts participants' answers from
+#' the database.
+#' 
+#' @param db dyplr database handle
+#' @param session.id session from which to load data
+#' @param question.name name of question as identified in xml
+#' @keywords session, database, questionnaire
+#' @export
+#' @return question and answer of participant
+#' @examples
+#' question <- get_participants_bool_answers(db,session.id = 45,question.name="socDem1")
+#' 
+get_participants_bool_answers <-function(db,session.ids=c(45),question.name="socDem1"){
+  
+  df <- data.frame()
+  other <- get_participant_bool_answers(db,session.id = session.ids[1],question.name = question.name) %>% collect()
+  df <- merge(x = df, y = other, all = TRUE)
+  for(id in session.ids){
+    other <- get_participant_bool_answers(db,session.id = id,question.name = question.name) %>% collect()
+    df <- merge(x = df, y = other, all = TRUE)
+  }
+  df$question_id <- NULL
+  df$name <- NULL
+  result<-dcast(df, formula = session_id ~ label)
   return(result)
 }
 
@@ -73,6 +102,37 @@ get_participant_textbox_answer<-function(db,session.id=45,question.name="socDem2
     mutate_each(funs(type.convert(as.character(.)))) #finds optimal type for characters
   
   return(result)
+}
+
+#' Get Participants Textbox Answer
+#'
+#' This function extracts participants' answers from
+#' the database. The evaluation is lazy and this data can be
+#' used as input for further remote computations.
+#' 
+#' Note: Converts to integer, numeric or string
+#' @param db dyplr database handle
+#' @param session.id session from which to load data
+#' @param question.name name of question as identified in xml
+#' @keywords session, database, lazy, questionnaire
+#' @export
+#' @return question and answer of participant
+#' @examples
+#' question <- get_participants_answer(db,session.id = 45,question.name="socDem2")
+#' 
+get_participants_textbox_answer<-function(db,session.ids=c(45),column.name="value",question.name="socDem2"){
+  df <- data.frame()
+  new_entry <- get_participant_textbox_answer(db,session.id = session.ids[1],question.name = question.name) %>% collect()
+  df <- merge(x = df, y = new_entry, all = TRUE)
+  for(id in session.ids){
+    new_entry <- get_participant_textbox_answer(db,session.id = id,question.name = question.name) %>% collect()
+    df <- merge(x = df, y = new_entry, all = TRUE)
+  }
+  df[[column.name]] <- df$val
+  df$val <- NULL
+  df$question_id <- NULL
+  df$name <- NULL
+  return(df)
 }
 
 #' Get Participant Answer IDs
