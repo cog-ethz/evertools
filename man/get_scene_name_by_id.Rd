@@ -4,21 +4,21 @@
 \alias{get_scene_name_by_id}
 \title{Get Scene Name By ID}
 \usage{
-get_scene_name_by_id(db, scene.name = "0")
+get_scene_name_by_id(db, scene.id = 0)
 }
 \arguments{
 \item{db}{dyplr database handle}
 
-\item{scene.name}{scene from which to load the data}
-
 \item{session.id}{session from which to load data}
+
+\item{scene.name}{scene from which to load the data}
 }
 \description{
 This function extracts a a scene name by the scene
 id
 }
 \examples{
-scene_name <- getSceneNameById(db, scene.name = "5")
+scene_name <- get_scene_name_by_id(db, scene.name = 5)
 
 }
 \keyword{database,}

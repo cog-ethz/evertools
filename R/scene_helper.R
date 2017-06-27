@@ -7,14 +7,15 @@
 #' @keywords session, database, lazy, orientation
 #' @export
 #' @examples
-#' scene_name <- get_scene_id_by_name(db, scene.id = 5)
-#' 
-get_scene_id_by_name <- function(db, scene.id = 0){
-  scene_name <- db %>%
+#' scene_name <- get_scene_id_by_name(db, scene.id = "5")
+#'  
+get_scene_id_by_name <- function(db, scene.name = "0"){
+  scene_id <- db %>%
     tbl("scene") %>%
-    filter(id==scene.id) %>%
-    select(scene_name) %>%
+    filter(scene_name==scene.name) %>%
+    select(id) %>%
     collect()
+  return(scene_id)
 }
 
 #' Get Scene Name By ID
@@ -27,12 +28,13 @@ get_scene_id_by_name <- function(db, scene.id = 0){
 #' @keywords session, database, lazy, orientation
 #' @export
 #' @examples
-#' scene_name <- getSceneNameById(db, scene.name = "5")
-#' 
-get_scene_name_by_id <- function(db, scene.name = "0"){
+#' scene_name <- get_scene_name_by_id(db, scene.name = 5)
+#'
+get_scene_name_by_id <- function(db, scene.id = 0){
   scene_name <- db %>%
     tbl("scene") %>%
-    filter(scene_name==scene.name) %>%
-    select(id) %>%
+    filter(id==scene.id) %>%
+    select(scene_name) %>%
     collect()
+  return(scene_name)
 }
