@@ -106,3 +106,65 @@ box_plot_variable <- function(data = NULL, y.var = NULL, x.var = NULL, grouping 
     theme(plot.title = element_text(hjust = 0.5))
   return(p)
 }
+
+#' Box Plot Variable
+#'
+#' This function provides a box plot of a variable.
+#' 
+#' It can be separated by scene and a controling factor
+#' 
+#' @param samples Data points to be qq plotted.
+#' @param variable.name Name of the variable which is ploted
+#' @param scene.name Name of the scene that is ploted
+#' @keywords EVE, evaluation, path
+#' @export
+#' @return A table with session ids and durations.
+#' @examples
+#' #Box plot without variable subgroupings
+#' box_plot_variable(test, 
+#'                   y.var = "path_length", 
+#'                   x.var = "scene_name", 
+#'                   grouping = "scene_id", 
+#'                   y.name = "Path Length", 
+#'                   x.name = "Scene", 
+#'                   group.label = c("Training","City"))
+#' #Box plot with variable subgroupings
+#' box_plot_variable(test,
+#'                   y.var = "path_length",
+#'                   x.var = "scene_name",
+#'                   grouping = "scene_id + sex",
+#'                   coloring = "sex",
+#'                   y.name = "Path Length",
+#'                   x.name = "Scene",
+#'                   group.label = c("Training","City"),
+#'                   legend.name = "Sex",
+#'                   legend.label = c("TRUE"="Female", "FALSE"="Male"))
+#' 
+histogram_density_plot_variable <- function(data = NULL, bin.width = 50, alpha = 0.2, x.var = NULL, x.name = "",
+                                            grouping = NULL, legend.name= "", legend.labels=NULL,
+                                            condition.name = "") {
+  p <- ggplot(data=data) +
+    geom_histogram(binwidth = bin.width,
+                   position = "identity",
+                   alpha = alpha,
+                   aes_string(x = x.var,
+                              y = "..density..",
+                              group = grouping,
+                              color = grouping,
+                              fill = grouping)) +
+    geom_density(aes_string(x = x.var,
+                            group = grouping,
+                            color = grouping))+
+    geom_density(aes_string(x=x.var))+
+    labs(title = x.name %++% " Histogram and Density " %++% condition.name,
+         x = x.name,
+         y = "Density") +
+    scale_colour_discrete(name  =legend.name,
+                          labels = legend.labels)+
+    scale_fill_discrete(name = legend.name,
+                        labels = legend.labels)+
+    scale_alpha_continuous(guide=FALSE)+
+    theme_bw() +
+    theme(plot.title = element_text(hjust = 0.5))
+  return(p)
+}

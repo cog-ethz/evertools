@@ -29,4 +29,3 @@ question <- get_participant_bool_answers(db,session.id = 45,question.name="socDe
 \keyword{lazy,}
 \keyword{questionnaire}
 \keyword{session,}
-

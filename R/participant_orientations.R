@@ -13,12 +13,18 @@
 #' yaws <- get_participant_orientations_yaw(session.id = 5)
 #' 
 get_participant_orientations_yaw <- function(db, session.id = 1, scene.id = 0){
-  positions <- db %>% 
-    tbl("store_positions") %>% 
-    filter(session_id==session.id && scene_id ==scene.id) %>%
-    select(view_euler_angle_y,timestamp) %>% 
+  device_id <- db %>% 
+    tbl("data_description") %>% 
+    filter(description=="euler_angles") %>%
+    select(id) %>%
+    collect()
+  
+  orientations <- db %>% 
+    tbl("sensor_data_3d") %>% 
+    filter(session_id==session.id && data_description_id ==device_id$id) %>%
+    select(y,time) %>% 
     collapse() 
-  return(positions)
+  return(orientations)
 }
 
 #' Get Participant Orientations (Pitch)
@@ -36,10 +42,16 @@ get_participant_orientations_yaw <- function(db, session.id = 1, scene.id = 0){
 #' orientations <- get_participant_orientations(session.id = 5)
 #' 
 get_participant_orientations<- function(db, session.id = 1, scene.id = 0){
-  positions <- db %>% 
-    tbl("store_positions") %>% 
-    filter(session_id==session.id && scene_id ==scene.id) %>%
-    select(view_euler_angle_x,view_euler_angle_y,view_euler_angle_z,timestamp) %>% 
+device_id <- db %>% 
+    tbl("data_description") %>% 
+    filter(description=="euler_angles") %>%
+    select(id) %>%
+    collect()
+  
+  orientations <- db %>% 
+    tbl("sensor_data_3d") %>% 
+    filter(session_id==session.id && data_description_id ==device_id$id) %>%
+    select(x,y,z,time) %>% 
     collapse() 
-  return(positions)
+  return(orientations)
 }

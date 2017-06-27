@@ -25,4 +25,3 @@ parameters <- get_session_parameters(db, session.ids = c(45))
 \keyword{database,}
 \keyword{parameters}
 \keyword{session,}
-

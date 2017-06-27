@@ -27,4 +27,3 @@ yaws <- get_participant_orientations_yaw(session.id = 5)
 \keyword{lazy,}
 \keyword{orientation}
 \keyword{session,}
-

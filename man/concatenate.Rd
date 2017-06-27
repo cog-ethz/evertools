@@ -26,4 +26,3 @@ a separating space
 }
 \keyword{Helper,}
 \keyword{string}
-

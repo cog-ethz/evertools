@@ -28,4 +28,3 @@ question <- get_participants_bool_answers(db,session.id = 45,question.name="socD
 \keyword{database,}
 \keyword{questionnaire}
 \keyword{session,}
-

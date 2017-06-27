@@ -27,4 +27,3 @@ orientations <- get_participant_orientations(session.id = 5)
 \keyword{lazy,}
 \keyword{orientation}
 \keyword{session,}
-

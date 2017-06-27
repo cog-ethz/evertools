@@ -29,4 +29,3 @@ positions <- get_participant_positions_YXZ(session.id = 5)
 \keyword{lazy,}
 \keyword{position}
 \keyword{session,}
-

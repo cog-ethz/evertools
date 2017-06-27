@@ -33,4 +33,3 @@ question <- get_participants_answer(db,session.id = 45,question.name="socDem2")
 \keyword{lazy,}
 \keyword{questionnaire}
 \keyword{session,}
-

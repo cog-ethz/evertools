@@ -28,4 +28,3 @@ df <- year2age(df,2016)
 \keyword{age,}
 \keyword{conversion}
 \keyword{year,}
-

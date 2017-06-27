@@ -32,4 +32,3 @@ normal_plots(paths$path_length[paths$scene_id==17],"Path Length","Training")
 \keyword{normal}
 \keyword{normality,}
 \keyword{plots,}
-

@@ -25,4 +25,3 @@ This function wraps concatentate
 }
 \keyword{Helper,}
 \keyword{string}
-

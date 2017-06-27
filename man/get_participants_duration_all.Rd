@@ -28,4 +28,3 @@ paths <- get_participants_path_length_all(db, session.ids = c(1:8), scene.ids = 
 \keyword{EVE,}
 \keyword{evaluation,}
 \keyword{path}
-

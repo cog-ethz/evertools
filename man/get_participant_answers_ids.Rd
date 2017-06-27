@@ -28,4 +28,3 @@ answer_ids <- get_participant_answers_ids(db,session.id=45)
 \keyword{lazy,}
 \keyword{questionnaire}
 \keyword{session,}
-
