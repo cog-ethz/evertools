@@ -42,11 +42,8 @@ get_participant_orientations_yaw <- function(db, session.id = 1, scene.id = 0){
 #' orientations <- get_participant_orientations(session.id = 5)
 #' 
 get_participant_orientations<- function(db, session.id = 1, scene.id = 0){
-device_id <- db %>% 
-    tbl("data_description") %>% 
-    filter(description=="euler_angles") %>%
-    select(id) %>%
-    collect()
+  
+  device_id <- get_sensor_id_by_name(db,"euler_angles")
   
   orientations <- db %>% 
     tbl("sensor_data_3d") %>% 

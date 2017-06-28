@@ -2,24 +2,25 @@
 % Please edit documentation in R/sensor_helper.R
 \name{get_sensor_name_by_id}
 \alias{get_sensor_name_by_id}
-\title{Get Scene Name By ID}
+\title{Get Scene Name By Id}
 \usage{
-get_sensor_name_by_id(db, scene.name = "0")
+get_sensor_name_by_id(db, scene.id = 0)
 }
 \arguments{
 \item{db}{dyplr database handle}
 
-\item{scene.name}{scene to be identified}
+\item{scene.id}{scene id to be named}
 }
 \description{
-This function extracts a a scene name by the scene
-id
+This function extracts a a scene id by the scene
+name.
 }
 \examples{
-scene_name <- get_sensor_name_by_id(db, scene.name = "5")
+scene_name <- get_sensor_name_by_id(db, scene.id = 5)
+
 
 }
 \keyword{database,}
 \keyword{lazy,}
-\keyword{scene}
+\keyword{orientation}
 \keyword{session,}

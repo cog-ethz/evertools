@@ -4,22 +4,22 @@
 \alias{get_sensor_id_by_name}
 \title{Get Scene ID By Name}
 \usage{
-get_sensor_id_by_name(db, scene.id = 0)
+get_sensor_id_by_name(db, sensor.name = "0")
 }
 \arguments{
 \item{db}{dyplr database handle}
 
-\item{scene.id}{scene id to be named}
+\item{scene.name}{scene to be identified}
 }
 \description{
-This function extracts a a scene id by the scene
-name.
+This function extracts a a scene name by the scene
+id
 }
 \examples{
-scene_name <- get_sensor_id_by_name(db, scene.id = 5)
+scene_name <- get_sensor_id_by_name(db, scene.name = "5")
 
 }
 \keyword{database,}
 \keyword{lazy,}
-\keyword{orientation}
+\keyword{scene}
 \keyword{session,}
