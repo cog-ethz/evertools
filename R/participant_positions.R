@@ -12,11 +12,7 @@
 #' positions <- get_participant_positions_YXZ(session.id = 5)
 #' 
 get_participant_positions_XYZ <- function(db, session.id = 1, scene.id = 0){
-  device_id <- db %>% 
-    tbl("data_description") %>% 
-    filter(description=="position") %>%
-    select(id) %>%
-    collect()
+  device_id <- get_sensor_id_by_name(db,"position")
   
   positions <- db %>% 
     tbl("sensor_data_3d") %>% 
@@ -43,11 +39,7 @@ get_participant_positions_XYZ <- function(db, session.id = 1, scene.id = 0){
 #' positions <- get_participant_positions_YXZ(session.id = 5)
 #' 
 get_participant_positions_XZ <- function(db, session.id = 1, scene.id = 0){
-  device_id <- db %>% 
-    tbl("data_description") %>% 
-    filter(description=="position") %>%
-    select(id) %>%
-    collapse()
+  device_id <- get_sensor_id_by_name(db,"position")
   
   positions <- db %>% 
     tbl("sensor_data_3d") %>% 

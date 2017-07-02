@@ -16,7 +16,7 @@ This function extracts a a scene name by the scene
 id
 }
 \examples{
-scene_name <- get_sensor_id_by_name(db, scene.name = "5")
+sensor_id <- get_sensor_id_by_name(db, scene.name = "5")
 
 }
 \keyword{database,}

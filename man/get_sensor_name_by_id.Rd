@@ -4,7 +4,7 @@
 \alias{get_sensor_name_by_id}
 \title{Get Scene Name By Id}
 \usage{
-get_sensor_name_by_id(db, scene.id = 0)
+get_sensor_name_by_id(db, sensor.id = 0)
 }
 \arguments{
 \item{db}{dyplr database handle}
@@ -16,7 +16,7 @@ This function extracts a a scene id by the scene
 name.
 }
 \examples{
-scene_name <- get_sensor_name_by_id(db, scene.id = 5)
+scene_name <- get_sensor_name_by_id(db, sensor.id = 5)
 
 
 }

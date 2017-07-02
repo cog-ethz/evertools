@@ -7,13 +7,13 @@
 #' @keywords session, database, lazy, orientation
 #' @export
 #' @examples
-#' scene_name <- get_sensor_name_by_id(db, scene.id = 5)
+#' scene_name <- get_sensor_name_by_id(db, sensor.id = 5)
 #' 
 #' 
-get_sensor_name_by_id <- function(db, scene.id = 0){
+get_sensor_name_by_id <- function(db, sensor.id = 0){
   sensor_name <- db %>% 
     tbl("data_description") %>% 
-    filter(id==scene.id) %>%
+    filter(id==sensor.id) %>%
     select(description) %>%
     collect()
   return(sensor_name)
@@ -28,7 +28,7 @@ get_sensor_name_by_id <- function(db, scene.id = 0){
 #' @keywords session, database, lazy, scene
 #' @export
 #' @examples
-#' scene_name <- get_sensor_id_by_name(db, scene.name = "5")
+#' sensor_id <- get_sensor_id_by_name(db, scene.name = "5")
 #' 
 get_sensor_id_by_name <- function(db, sensor.name = "0"){
   sensor_id <- db %>%
@@ -36,5 +36,5 @@ get_sensor_id_by_name <- function(db, sensor.name = "0"){
     filter(description==sensor.name) %>%
     select(id) %>%
     collect()
-  return(scene_id)
+  return(sensor_id)
 }
