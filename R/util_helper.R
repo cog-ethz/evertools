@@ -50,3 +50,63 @@ year2age <- function(df,base_year){
   df$age <- ifelse(df$age>150,2016-df$age,df$age)
   return(df)
 }
+
+
+#' Is POSIXct
+#' 
+#' Tests whether an object is POSIXct.
+#' 
+#' Note: Suggestion by https://stackoverflow.com/a/26413765
+#' @param x Object to be tested
+#' @keywords Helper, date, type-testing
+#' @export
+#' @return whether x is POSIXct
+#' @examples 
+#' x <- "blub"
+#' is.X.POSIXct <- is.POSIXct(x)#returns F
+is.POSIXct <- function(x) inherits(x, "POSIXct")
+
+
+#' Is POSIXlt
+#' 
+#' Tests whether an object is POSIXlt.
+#' 
+#' Note: Suggestion by https://stackoverflow.com/a/26413765
+#' @param x Object to be tested
+#' @keywords Helper, date, type-testing
+#' @export
+#' @return whether x is POSIXlt
+#' @examples 
+#' x <- "blub"
+#' is.X.POSIXlt <- is.POSIXlt(x)#returns F
+is.POSIXlt <- function(x) inherits(x, "POSIXlt")
+
+
+#' Is POSIXt
+#' 
+#' Tests whether an object is POSIXt.
+#' 
+#' Note: Suggestion by https://stackoverflow.com/a/26413765
+#' @param x Object to be tested
+#' @keywords Helper, date, type-testing
+#' @export
+#' @return whether x is POSIXt
+#' @examples 
+#' x <- "blub"
+#' is.X.POSIXt <- is.POSIXt(x)#returns F
+is.POSIXt <- function(x) inherits(x, "POSIXt")
+
+
+#' Is Date
+#' 
+#' Tests whether an object is Date
+#' 
+#' Note: Suggestion by https://stackoverflow.com/a/26413765
+#' @param x Object to be tested
+#' @keywords Helper, date, type-testing
+#' @export
+#' @return whether x is Date
+#' @examples 
+#' x <- "blub"
+#' is.X.Date <- is.Date(x)#returns F
+is.Date <- function(x) inherits(x, "Date")
