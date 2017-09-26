@@ -13,6 +13,8 @@ get_session_scene_time_information(db, session.id = "0",
 \item{session.id}{session which to analyse}
 
 \item{scene.name}{scene which to analyse}
+
+\item{string.form}{returns results as strings if true or as numeric otherwise}
 }
 \description{
 This function extracts a a scene id by the scene

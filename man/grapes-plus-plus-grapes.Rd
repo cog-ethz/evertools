@@ -20,7 +20,7 @@ This function wraps concatentate
 \examples{
 > s1 <- "a"
 > s2 <- "b"
-> s1 \%+\% s2
+> s1 \%++\% s2
 [1] "a b"
 }
 \keyword{Helper,}

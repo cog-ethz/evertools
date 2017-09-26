@@ -28,7 +28,7 @@ concatenate <- function (s1,s2){
 #' @examples 
 #' > s1 <- "a"
 #' > s2 <- "b"
-#' > s1 %+% s2
+#' > s1 %++% s2
 #' [1] "a b"
 `%++%` <- function (s1,s2)concatenate(s1,s2)
 

@@ -13,4 +13,4 @@ Imports:
     dbplyr,
     dplyr,
     ggplot2,
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000
