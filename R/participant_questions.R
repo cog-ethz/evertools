@@ -15,28 +15,29 @@
 #' 
 get_participant_bool_answers <-function(db,session.id=45,question.name="socDem1"){
   
-  #Get tables
   answer_ids <- get_participant_answers_ids(db,session.id=session.id)
-  answers_stored_bools <- db %>% tbl("answers_stored_bools")
+  answers_stored_bools <- db %>% tbl("answers_stored_strings")
   questions <- db %>% tbl("questions") %>% filter(name == question.name)
   questions_stored_strings <- db %>% tbl("questions_stored_strings")
   store_strings <- db %>% tbl("store_strings")
-  store_bools <- db %>% tbl("store_bools")
   
   #Get Label
   question_options <- left_join(questions,questions_stored_strings,by = c("id" = "questions_id"))
   question_options_text <-  left_join(question_options,store_strings%>% rename(string_id =id),c("string_id" = "string_id"))%>%
+    filter(type.y=="string") %>%
     select(pos,label = val)
   
   #Get Value
   bool_ids <- left_join(answer_ids,answers_stored_bools,by = c("answer_id" = "answer_id")) %>%
-    select(answer_id,session_id,question_id,bool_id)
+    select(answer_id,session_id,question_id,string_id)
   bool_answers_ids <- left_join(questions %>% rename(question_id =id),bool_ids,c("question_id" = "question_id"))
-  bool_answers <- left_join(bool_answers_ids,store_bools %>% rename(bool_id =id),c("bool_id" = "bool_id")) 
+  bool_answers <- left_join(bool_answers_ids,store_strings %>% rename(string_id =id),c("string_id" = "string_id"))
   
-  result <- left_join(bool_answers,question_options_text,c("pos" = "pos")) %>%
-    select(session_id,question_id,name,label,val)
+  bool_answers <- as.data.frame(bool_answers)
+  bool_answers$pos <- bool_answers$pos+1
   
+  result <- left_join(bool_answers,as.data.frame(question_options_text),c("pos" = "pos")) %>%
+    select(session_id,question_id,name,pos,label,val) 
   return(result)
 }
 
@@ -65,7 +66,7 @@ get_participants_bool_answers <-function(db,session.ids=c(45),question.name="soc
   }
   df$question_id <- NULL
   df$name <- NULL
-  result<-dcast(df, formula = session_id ~ label)
+  result<-dcast(df, formula = session_id +pos ~ label)
   return(result)
 }
 
@@ -83,7 +84,7 @@ get_participants_bool_answers <-function(db,session.ids=c(45),question.name="soc
 #' @export
 #' @return question and answer of participant
 #' @examples
-#' question <- get_participants_answer(db,session.id = 45,question.name="socDem2")
+#' question <- get_participant_textbox_answer(db,session.id = 45,question.name="socDem2")
 #' 
 get_participant_textbox_answer<-function(db,session.id=45,question.name="socDem2"){
   
@@ -99,7 +100,7 @@ get_participant_textbox_answer<-function(db,session.id=45,question.name="socDem2
   text_id <- left_join(questions %>% rename(question_id =id),answer_id,c("question_id" = "question_id"))
   result <- left_join(text_id,store_strings %>% rename(string_id =id),c("string_id" = "string_id")) %>% 
     select(session_id,question_id,name,val) %>% collect () %>%
-    mutate_each(funs(type.convert(as.character(.)))) #finds optimal type for characters
+    mutate_all(funs(type.convert(as.character(.)))) #finds optimal type for characters
   
   return(result)
 }
@@ -118,7 +119,7 @@ get_participant_textbox_answer<-function(db,session.id=45,question.name="socDem2
 #' @export
 #' @return question and answer of participant
 #' @examples
-#' question <- get_participants_answer(db,session.id = 45,question.name="socDem2")
+#' question <- get_participants_textbox_answer(db,session.id = 45,question.name="socDem2")
 #' 
 get_participants_textbox_answer<-function(db,session.ids=c(45),column.name="value",question.name="socDem2"){
   df <- data.frame()

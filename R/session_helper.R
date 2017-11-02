@@ -31,7 +31,7 @@ get_session_scene_time_information <- function(db, session.id= "0", scene.name =
   duration <- as.numeric(as.POSIXlt(end_time$time)-as.POSIXlt(start_time$time))
   
   if (string.form){
-    return(list(start=as.POSIXct(start_time$time),end=as.POSIXct(end_time$time),duration=duration))
+    return(list(start=start_time$time,end=end_time$time,duration=as.character(duration)))
   }else{
     return(list(start=as.POSIXct(start_time$time),end=as.POSIXct(end_time$time),duration=duration))
   }
