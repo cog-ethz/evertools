@@ -12,11 +12,15 @@
 #' parameters <- get_session_parameters(db, session.ids = c(45))
 #' 
 get_session_parameters<-function(db,session.ids=c(45)){
-  session_parameters <- db %>% tbl("experiment_parameter") %>%
-    filter(session_id %in% session.ids) %>% collect()
   
-  parameters<-dcast(session_parameters, formula = session_id ~ parameter_descr) %>%
-    mutate_each(funs(type.convert(as.character(.))))
+  experiment_parameters <- db %>% tbl("experiment_parameter") 
+  session_parameter_values <- db %>% tbl("session_parameter_values") %>%
+    filter(session_id %in% session.ids)
+  
+  session_parameters <- left_join(x = experiment_parameters %>% rename(experiment_parameter_id =id),y = session_parameter_values,by = c("experiment_parameter_id" = "experiment_parameter_id"))
+  
+  parameters<-dcast(as.data.frame(session_parameters), formula = session_id ~ parameter_description) %>%
+    mutate_all(funs(type.convert(as.character(.))))
   
   names(parameters) <- tolower(names(parameters))
   names(parameters) <- sub(" ", "_", names(parameters))
