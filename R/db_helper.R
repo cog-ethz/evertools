@@ -12,7 +12,7 @@
 #' parameters <- get_session_parameters(db, session.ids = c(45))
 #' 
 get_session_parameters<-function(db,session.ids=c(45)){
-  session_parameters <- db %>% tbl("session_parameters") %>%
+  session_parameters <- db %>% tbl("experiment_parameter") %>%
     filter(session_id %in% session.ids) %>% collect()
   
   parameters<-dcast(session_parameters, formula = session_id ~ parameter_descr) %>%
