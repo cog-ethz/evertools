@@ -4,7 +4,7 @@
 \alias{get_participant_positions_XZ}
 \title{Get Participant Positions (XYZ)}
 \usage{
-get_participant_positions_XZ(db, session.id = 1, scene.id = 0)
+get_participant_positions_XZ(db, session.id = 1, scene.name = "Tolman_01")
 }
 \arguments{
 \item{db}{dyplr database handle}
@@ -22,7 +22,7 @@ This function corresponds to position in a projection to a plane
 with the Up vector as a normal.
 }
 \examples{
-positions <- get_participant_positions_YXZ(session.id = 5)
+positions <- get_participant_positions_YXZ(db, session.id = 1, scene.name = "Tolman_01")
 
 }
 \keyword{database,}

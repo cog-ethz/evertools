@@ -9,7 +9,7 @@
 #' @keywords session, database, lazy, position
 #' @export
 #' @examples
-#' positions <- get_participant_positions_YXZ(session.id = 5)
+#' positions <- get_participant_positions_YXZ(db, session.id = 1, scene.name = "Tolman_01")
 #' 
 get_participant_positions_XYZ <- function(db, session.id = 1, scene.name = "Tolman_01"){
   device_id <- get_sensor_id_by_name(db,"position")
@@ -18,12 +18,11 @@ get_participant_positions_XYZ <- function(db, session.id = 1, scene.name = "Tolm
                                                   scene.name = scene.name)
   print(time_info)
   data <- get_sensor_data_3d(db = db, 
-                               session.id = session.id, 
-                               sensor.id = device_id, 
-                               start.time = time_info$start, 
-                               end.time = time_info$end)
-
-  return(data)
+                             session.id = session.id, 
+                             sensor.id = as.numeric(device_id), 
+                             start.time = time_info$start, 
+                             end.time = time_info$end)
+  return(data %>% select(x,y,z,time))
 }
 
 #' Get Participant Positions (XYZ)
@@ -40,15 +39,22 @@ get_participant_positions_XYZ <- function(db, session.id = 1, scene.name = "Tolm
 #' @keywords session, database, lazy, position
 #' @export
 #' @examples
-#' positions <- get_participant_positions_YXZ(session.id = 5)
+#' positions <- get_participant_positions_YXZ(db, session.id = 1, scene.name = "Tolman_01")
 #' 
-get_participant_positions_XZ <- function(db, session.id = 1, scene.id = 0){
+get_participant_positions_XZ <- function(db, session.id = 1, scene.name = "Tolman_01"){
+  
+  device_id <- get_sensor_id_by_name(db,"position")
+  time_info <- get_session_scene_time_information(db = db, 
+                                                  session.id = session.id, 
+                                                  scene.name = scene.name)
+  print(time_info)
+  data <- get_sensor_data_3d(db = db, 
+                             session.id = session.id, 
+                             sensor.id = as.numeric(device_id), 
+                             start.time = time_info$start, 
+                             end.time = time_info$end)
   device_id <- get_sensor_id_by_name(db,"position")
   
-  positions <- db %>% 
-    tbl("sensor_data_3d") %>% 
-    filter(session_id==session.id && data_description_id ==device_id$id) %>%
-    select(x,z,time) %>% 
-    collapse() 
+  return(data %>% select(x,z,time))
   return(positions)
 }

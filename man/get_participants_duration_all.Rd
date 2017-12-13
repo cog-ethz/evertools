@@ -4,7 +4,8 @@
 \alias{get_participants_duration_all}
 \title{Get Participants Duration All}
 \usage{
-get_participants_duration_all(db, session.ids = c(1), scene.ids = c(0))
+get_participants_duration_all(db, session.ids = c(1),
+  scene.names = c("Tolman"))
 }
 \arguments{
 \item{db}{dyplr database handle}

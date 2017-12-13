@@ -19,7 +19,7 @@ the database. The evaluation is lazy and this data can be
 used as input for further remote computations.
 }
 \examples{
-positions <- get_participant_positions_YXZ(session.id = 5)
+positions <- get_participant_positions_YXZ(db, session.id = 1, scene.name = "Tolman_01")
 
 }
 \keyword{database,}

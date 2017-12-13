@@ -4,7 +4,8 @@
 \alias{get_participants_path_length}
 \title{Get Participants Path Length}
 \usage{
-get_participants_path_length(db, session.ids = c(1), scene.id = 0)
+get_participants_path_length(db, session.ids = c(1),
+  scene.name = "Tolman_01")
 }
 \arguments{
 \item{db}{dyplr database handle}

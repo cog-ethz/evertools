@@ -12,11 +12,11 @@
 #' db <- setup_evertools()
 #' path <- get_participant_path_length(db, session.id = 1, scene.id = 0)
 #' 
-get_participant_path_length <- function(db, session.id = 1, scene.id = 0){
-  table <- get_participant_positions_XZ(db,session.id = session.id, scene.id = scene.id) %>% collect()
+get_participant_path_length <- function(db, session.id = 1, scene.name = "Tolman_01"){
+  table <- get_participant_positions_XZ(db,session.id = session.id, scene.name = scene.name) %>% collect()
   if (nrow(table)> 0) {
-  dtable <- table[2:nrow(table),1:2] - table[1:nrow(table)-1,1:2]
-  length <- sum(apply(X = dtable, MARGIN = 1, FUN = norm, '2'))
+    dtable <- data.matrix(table[2:nrow(table),1:2]) - data.matrix(table[1:nrow(table)-1,1:2])
+    length <- sum(apply(X = dtable, MARGIN = 1, FUN = norm, '2'))
   } else {
     length <- NA
   }
@@ -37,16 +37,14 @@ get_participant_path_length <- function(db, session.id = 1, scene.id = 0){
 #' db <- setup_evertools()
 #' paths <- get_participants_path_length(db, session.ids = c(1:8), scene.ids = 0)
 #' 
-get_participants_path_length <- function(db, session.ids = c(1), scene.id = 0){
-  session_id <- session.ids
-  scene_id <- rep(scene.id, times = length(session.ids))
+get_participants_path_length <- function(db, session.ids = c(1), scene.name = "Tolman_01"){
   path_length <- vector(length = length(session.ids))
   iter <- 1
-  for (id in session_id) {
-    path_length[iter] <- get_participant_path_length(db,session.id = id, scene.id = scene.id)
+  for (id in session.ids) {
+    path_length[iter] <- get_participant_path_length(db,session.id = id, scene.name = scene.name)
     iter <- iter + 1
   }
-  paths <- data.frame(scene_id,session_id,path_length)
+  paths <- data.frame(scene.name,session.ids,path_length)
   return(paths)
 }
 
@@ -64,12 +62,10 @@ get_participants_path_length <- function(db, session.ids = c(1), scene.id = 0){
 #' db <- setup_evertools()
 #' paths <- get_participants_path_length_all(db, session.ids = c(1:8), scene.ids = c(0:3))
 #' 
-get_participants_path_length_all <- function(db, session.ids = c(1), scene.ids = c(0)){
-  session_id <- session.ids
-  scene_id <- scene.ids
+get_participants_path_length_all <- function(db, session.ids = c(1), scene.names = c("Tolman_01")){
   df <- NULL
-  for (id in scene_id) {
-     dataframe <- get_participants_path_length(db,session.ids = session_id, scene.id = id)
+  for (name in scene.names) {
+     dataframe <- get_participants_path_length(db,session.ids = session.ids, scene.name = name)
      if (is.null(df)){
        df <- dataframe 
      } else {

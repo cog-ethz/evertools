@@ -1,28 +1,5 @@
 #' Get Participant Times
 #'
-#' This function extracts a participant's time from
-#' the database. The evaluation is lazy and this data can be
-#' used as input for further remote computations.
-#' @param db dyplr database handle
-#' @param session.id session from which to load data
-#' @param scene.id scene from which to load the data
-#' @keywords session, database, lazy, position
-#' @export
-#' @return time in 
-#' @examples
-#' positions <- get_participant_positions_YXZ(session.id = 5)
-#' 
-get_participant_times <- function(db, session.id = 1, scene.id = 0){
-  positions <- db %>% 
-    tbl("store_positions") %>% 
-    filter(session_id==session.id && scene_id ==scene.id) %>%
-    select(timestamp) %>% 
-    collapse() 
-  return(positions)
-}
-
-#' Get Participant Times
-#'
 #' This function computes the duration a participant spent in an
 #' experiment scene
 #' @param db dyplr database handle
@@ -34,16 +11,16 @@ get_participant_times <- function(db, session.id = 1, scene.id = 0){
 #' @examples 
 #' positions <- get_participant_positions_YXZ(session.id = 5)
 #' 
-get_participant_duration <- function(db, session.id = 1, scene.id = 0){
-  table <- get_participant_times(db,session.id = session.id, scene.id = scene.id) %>% collect()
-  table$time <- as.numeric(as.POSIXct( table$timestamp))
-  if (nrow(table)> 0) {
-    dtable <- table[2:nrow(table),2] - table[1:nrow(table)-1,2]
-    length <- sum(apply(X = dtable, MARGIN = 1, FUN = norm, '2'))
-  } else {
-    length <- NA
-  }
-  return(length)
+get_participant_duration <- function(db, session.id = 1, scene.name = "Tolman_01"){
+  time_info <- get_session_scene_time_information(db = db, 
+                                                  session.id = session.id, 
+                                                  scene.name = scene.name)
+  data <- get_sensor_data_3d(db = db, 
+                             session.id = session.id, 
+                             sensor.id = as.numeric(device_id), 
+                             start.time = time_info$start, 
+                             end.time = time_info$end)
+  return(time_info$end-time_info$start)
 }
 
 #' Get Participants Duration
@@ -60,16 +37,14 @@ get_participant_duration <- function(db, session.id = 1, scene.id = 0){
 #' db <- setup_evertools()
 #' paths <- get_participants_path_length(db, session.ids = c(1:8), scene.ids = 0)
 #' 
-get_participants_duration <- function(db, session.ids = c(1), scene.id = 0){
-  session_id <- session.ids
-  scene_id <- rep(scene.id, times = length(session.ids))
+get_participants_duration <- function(db, session.ids = c(1), scene.name = "Tolman_01"){
   duration <- vector(length = length(session.ids))
   iter <- 1
-  for (id in session_id) {
-    duration[iter] <- get_participant_duration(db,session.id = id, scene.id = scene.id)
+  for (id in session.ids) {
+    duration[iter] <- get_participant_duration(db,session.id = id, scene.name = scene.name)
     iter <- iter + 1
   }
-  durations <- data.frame(scene_id,session_id,duration)
+  durations <- data.frame(scene.name,session.ids,duration)
   return(durations)
 }
 
@@ -88,12 +63,10 @@ get_participants_duration <- function(db, session.ids = c(1), scene.id = 0){
 #' db <- setup_evertools()
 #' paths <- get_participants_path_length_all(db, session.ids = c(1:8), scene.ids = c(0:3))
 #' 
-get_participants_duration_all <- function(db, session.ids = c(1), scene.ids = c(0)){
-  session_id <- session.ids
-  scene_id <- scene.ids
+get_participants_duration_all <- function(db, session.ids = c(1), scene.names = c("Tolman")){
   df <- NULL
-  for (id in scene_id) {
-    dataframe <- get_participants_duration(db,session.ids = session_id, scene.id = id)
+  for (name in scene.names) {
+    dataframe <- get_participants_duration(db,session.ids = session.ids, scene.name = name)
     if (is.null(df)){
       df <- dataframe 
     } else {

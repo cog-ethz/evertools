@@ -4,7 +4,8 @@
 \alias{get_participant_orientations_yaw}
 \title{Get Participant Orientations (Pitch)}
 \usage{
-get_participant_orientations_yaw(db, session.id = 1, scene.id = 0)
+get_participant_orientations_yaw(db, session.id = 1,
+  scene.name = "Tolman_01")
 }
 \arguments{
 \item{db}{dyplr database handle}
