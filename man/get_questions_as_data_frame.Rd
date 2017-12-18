@@ -4,7 +4,8 @@
 \alias{get_questions_as_data_frame}
 \title{Get Questions as Data Frame}
 \usage{
-get_questions_as_data_frame(db, session.ids, participant.ids = NULL)
+get_questions_as_data_frame(db, session.ids, participant.ids = NULL,
+  utf8 = T)
 }
 \arguments{
 \item{db}{dyplr database handle}
