@@ -1,7 +1,9 @@
 #' Get Questions as Data Frame
 #'
 #' This function extracts all participants' answers from
-#' the database. 
+#' the database. Note that this exports the answer indices
+#' rather than the output values. So the value 0 describes
+#' the first output. 
 #' 
 #' @param db dyplr database handle
 #' @param session.ids sessions from which to load data
@@ -32,7 +34,14 @@ get_questions_as_data_frame<-function(db, session.ids,participant.ids=NULL, utf8
     question <- get_participants_textbox_answer(db,session.id = session.ids,
                                                 question.name=name)
     names(question) <- convert(names(question))
-    df[,name] <- convert(question$value)
+    if (ncol(question) > 2){
+      df<-merge(df,
+                as.data.frame(sapply(question,convert)),
+                by.x = "session.ids",
+                by.y = "session_id")
+    } else {
+      df[,name] <- convert(question$"NA")
+    }
   }
   
   for (name in as.data.frame(bool_single_questions)$name){
@@ -45,34 +54,27 @@ get_questions_as_data_frame<-function(db, session.ids,participant.ids=NULL, utf8
   for (name in q_names){
     question <- get_participants_bool_answers(db,session.id = session.ids,
                                               question.name=name)
-    
+    if(is.na(question$session_id)) next 
     names(question) <- convert(names(question))
-    if(sapply(question,is.numeric)[3]){
-      gatherSpread <-question %>% 
-        select(-pos) %>%
-        gather(key, value, -c(session_id)) %>% 
-        mutate(value = ifelse(value == 0, NA, value)) %>%
-        na.omit() %>% 
-        spread(key, value,drop=F,fill = 0)
-    } else {
-      gatherSpread <-question %>% 
-        select(-pos) %>%
-        gather(key, value, -c(session_id)) %>% 
-        na.omit() %>% 
-        spread(key, value,drop=F)
-      nAnswers <- apply(gatherSpread,2,nchar)
-      textCols <- colSums(nAnswers,na.rm = T)
-      gatherSpread[nAnswers==0]<-1
-      gatherSpread[rep(!as.logical(textCols),
-                       each=nrow(gatherSpread))
-                   &is.na(gatherSpread)]<-0
-    }
+    gatherSpread <-question %>% 
+      select(-pos) %>%
+      gather(key, value, -c(session_id)) %>% 
+      na.omit() %>% 
+      spread(key, value,drop=F)
+    
     names(gatherSpread) <- paste(name,names(gatherSpread))
-    df<-merge(df,
-              as.data.frame(sapply(gatherSpread,
-                                   convert)),
-              by.x = "session.ids",
-              by.y = paste(name,"session_id"))
+    if (dim(gatherSpread)[1] > 1)
+      df<-merge(df,
+                as.data.frame(sapply(gatherSpread,
+                                     convert)),
+                by.x = "session.ids",
+                by.y = paste(name,"session_id"))
+    else 
+      df<-merge(df,
+                t(as.data.frame(sapply(gatherSpread,
+                                       convert))),
+                by.x = "session.ids",
+                by.y = paste(name,"session_id"),all = T)
   }
   return(df)
 }

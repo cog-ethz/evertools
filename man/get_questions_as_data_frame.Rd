@@ -13,18 +13,19 @@ get_questions_as_data_frame(db, session.ids, participant.ids = NULL,
 \item{session.ids}{sessions from which to load data}
 
 \item{participant.ids}{optional, identifier for participants}
+
+\item{utf8}{optional allows to turn of encoding in utf8}
 }
 \value{
 all answers of all participants
 }
 \description{
-This function extracts all participants' answer from
+This function extracts all participants' answers from
 the database.
 }
 \examples{
 questions.df <- get_questions_as_data_frame(db,session.ids = session.ids ,participant.ids = participant.ids)
-
 }
 \keyword{database,}
-\keyword{questionnaire}
-\keyword{session,}
+\keyword{export}
+\keyword{questionnaire,}
