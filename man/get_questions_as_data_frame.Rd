@@ -21,7 +21,9 @@ all answers of all participants
 }
 \description{
 This function extracts all participants' answers from
-the database.
+the database. Note that this exports the answer indices
+rather than the output values. So the value 0 describes
+the first output.
 }
 \examples{
 questions.df <- get_questions_as_data_frame(db,session.ids = session.ids ,participant.ids = participant.ids)
