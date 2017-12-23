@@ -40,7 +40,17 @@ get_questions_as_data_frame<-function(db, session.ids,participant.ids=NULL, utf8
                 by.x = "session.ids",
                 by.y = "session_id")
     } else {
-      df[,name] <- convert(question$"NA")
+      if (nrow(question)== nrow(df)){
+        df[,name] <- convert(question$"NA")
+      } else {
+        question[,name] <- convert(question$"NA")
+        question$"NA" <- NULL
+        df<-merge(df,
+                  as.data.frame(sapply(question,convert)),
+                  by.x = "session.ids",
+                  by.y = "session_id",
+                  all = T)
+      }
     }
   }
   
