@@ -4,7 +4,8 @@
 \alias{get_participant_bool_answers}
 \title{Get Participant Boolean Answer}
 \usage{
-get_participant_bool_answers(db, session.id = 45, question.name = "socDem1")
+get_participant_bool_answers(db, session.id = 45,
+  question.name = "socDem1")
 }
 \arguments{
 \item{db}{dyplr database handle}

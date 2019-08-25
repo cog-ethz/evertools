@@ -4,7 +4,8 @@
 \alias{get_participants_duration}
 \title{Get Participants Duration}
 \usage{
-get_participants_duration(db, session.ids = c(1), scene.name = "Tolman_01")
+get_participants_duration(db, session.ids = c(1),
+  scene.name = "Tolman_01")
 }
 \arguments{
 \item{db}{dyplr database handle}

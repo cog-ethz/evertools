@@ -4,9 +4,9 @@
 \alias{histogram_density_plot_variable}
 \title{Box Plot Variable}
 \usage{
-histogram_density_plot_variable(data = NULL, bin.width = 50, alpha = 0.2,
-  x.var = NULL, x.name = "", grouping = NULL, legend.name = "",
-  legend.labels = NULL, condition.name = "")
+histogram_density_plot_variable(data = NULL, bin.width = 50,
+  alpha = 0.2, x.var = NULL, x.name = "", grouping = NULL,
+  legend.name = "", legend.labels = NULL, condition.name = "")
 }
 \arguments{
 \item{samples}{Data points to be qq plotted.}

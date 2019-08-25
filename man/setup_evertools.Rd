@@ -5,7 +5,8 @@
 \title{Setup EVE R Tools}
 \usage{
 setup_evertools(db = "mysql", dbname = "virtual_study",
-  host = "localhost", user = "user", password = "password", port = 3306)
+  host = "localhost", user = "user", password = "password",
+  port = 3306)
 }
 \arguments{
 \item{db}{Type of database. Defaults to "mysql".}
