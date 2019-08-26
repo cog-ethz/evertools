@@ -8,20 +8,15 @@
 #' @keywords EVE, evaluation, duration
 #' @export
 #' @return Duration of a single scene
-#' @examples 
-#' positions <- get_participant_positions_YXZ(session.id = 5)
-#' 
+#' @examples
+#' positions <- get_participant_duration(db, session.id = 5, scene.name "Tolman_01")
+#'
 get_participant_duration <- function(db, session.id = 1, scene.name = "Tolman_01"){
   device_id <- get_sensor_id_by_name(db,"euler_angles")
-  time_info <- get_session_scene_time_information(db = db, 
-                                                  session.id = session.id, 
+  time_info <- get_session_scene_time_information(db = db,
+                                                  session.id = session.id,
                                                   scene.name = scene.name)
-  data <- get_sensor_data_3d(db = db, 
-                             session.id = session.id, 
-                             sensor.id = as.numeric(device_id), 
-                             start.time = time_info$start, 
-                             end.time = time_info$end)
-  return(time_info$end-time_info$start)
+  return(time_info$duration)
 }
 
 #' Get Participants Duration
@@ -34,10 +29,10 @@ get_participant_duration <- function(db, session.id = 1, scene.name = "Tolman_01
 #' @keywords EVE, evaluation, duration
 #' @export
 #' @return A table with scene ids, session ids and durations.
-#' @examples 
+#' @examples
 #' db <- setup_evertools()
 #' paths <- get_participants_path_length(db, session.ids = c(1:8), scene.ids = 0)
-#' 
+#'
 get_participants_duration <- function(db, session.ids = c(1), scene.name = "Tolman_01"){
   duration <- vector(length = length(session.ids))
   iter <- 1
@@ -60,16 +55,16 @@ get_participants_duration <- function(db, session.ids = c(1), scene.name = "Tolm
 #' @keywords EVE, evaluation, path
 #' @export
 #' @return A table with session ids and durations.
-#' @examples 
+#' @examples
 #' db <- setup_evertools()
 #' paths <- get_participants_path_length_all(db, session.ids = c(1:8), scene.ids = c(0:3))
-#' 
+#'
 get_participants_duration_all <- function(db, session.ids = c(1), scene.names = c("Tolman")){
   df <- NULL
   for (name in scene.names) {
     dataframe <- get_participants_duration(db,session.ids = session.ids, scene.name = name)
     if (is.null(df)){
-      df <- dataframe 
+      df <- dataframe
     } else {
       df <- merge(x = df, y = dataframe, all = TRUE)
     }

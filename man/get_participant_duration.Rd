@@ -21,7 +21,7 @@ This function computes the duration a participant spent in an
 experiment scene
 }
 \examples{
-positions <- get_participant_positions_YXZ(session.id = 5)
+positions <- get_participant_duration(db, session.id = 5, scene.name "Tolman_01")
 
 }
 \keyword{EVE,}

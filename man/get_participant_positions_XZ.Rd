@@ -19,7 +19,7 @@ This function extracts a participants position (x,z) and time from
 the database. The evaluation is lazy and this data can be
 used as input for further remote computations.
 Note that the Y axis corresponds to the Up Vector in unity data.
-This function corresponds to position in a projection to a plane 
+This function corresponds to position in a projection to a plane
 with the Up vector as a normal.
 }
 \examples{

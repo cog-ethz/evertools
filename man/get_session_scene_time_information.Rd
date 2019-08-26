@@ -22,7 +22,7 @@ name.
 }
 \examples{
 scene_name <- get_session_scene_time_information(db, session.id = "5", scene.name = "Test")
- 
+
 }
 \keyword{database,}
 \keyword{lazy,}
