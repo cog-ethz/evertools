@@ -5,15 +5,25 @@
 \title{Box Plot Variable}
 \usage{
 box_plot_variable(data = NULL, y.var = NULL, x.var = NULL,
-  grouping = NULL, coloring = NULL, y.name = "", x.name = "",
-  group.label = NULL, legend.name = "", legend.label = NULL)
+  coloring = NULL, y.name = "", x.name = "", group.label = NULL,
+  legend.name = "", legend.label = NULL)
 }
 \arguments{
-\item{samples}{Data points to be qq plotted.}
+\item{data}{Data points to be plotted.}
 
-\item{variable.name}{Name of the variable which is ploted}
+\item{y.var}{The variable to be plotted along the y-axis.}
 
-\item{scene.name}{Name of the scene that is ploted}
+\item{x.var}{The variable to be plotted along the x-axis.}
+
+\item{coloring}{The colors for subgroups.}
+
+\item{y.name}{Name of the y variable in the plot.}
+
+\item{x.name}{Name of the x variable in the plot.}
+
+\item{legend.name}{Title of the legend.}
+
+\item{legend.label}{New labels for the legend (optional).}
 }
 \value{
 A table with session ids and durations.
@@ -22,22 +32,20 @@ A table with session ids and durations.
 This function provides a box plot of a variable.
 }
 \details{
-It can be separated by scene and a controling factor
+It can be separated by scenes and controling factors.
 }
 \examples{
 #Box plot without variable subgroupings
-box_plot_variable(test, 
-                  y.var = "path_length", 
-                  x.var = "scene_name", 
-                  grouping = "scene_id", 
-                  y.name = "Path Length", 
-                  x.name = "Scene", 
+box_plot_variable(test,
+                  y.var = "path_length",
+                  x.var = "scene_name",
+                  y.name = "Path Length",
+                  x.name = "Scene",
                   group.label = c("Training","City"))
 #Box plot with variable subgroupings
 box_plot_variable(test,
                   y.var = "path_length",
                   x.var = "scene_name",
-                  grouping = "scene_id + sex",
                   coloring = "sex",
                   y.name = "Path Length",
                   x.name = "Scene",

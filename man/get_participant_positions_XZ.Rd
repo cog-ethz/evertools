@@ -2,7 +2,7 @@
 % Please edit documentation in R/participant_positions.R
 \name{get_participant_positions_XZ}
 \alias{get_participant_positions_XZ}
-\title{Get Participant Positions (XYZ)}
+\title{Get Participant Positions (XZ)}
 \usage{
 get_participant_positions_XZ(db, session.id = 1,
   scene.name = "Tolman_01")
@@ -23,7 +23,7 @@ This function corresponds to position in a projection to a plane
 with the Up vector as a normal.
 }
 \examples{
-positions <- get_participant_positions_YXZ(db, session.id = 1, scene.name = "Tolman_01")
+positions <- get_participant_positions_XZ(db, session.id = 1, scene.name = "Tolman_01")
 
 }
 \keyword{database,}

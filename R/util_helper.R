@@ -110,3 +110,52 @@ is.POSIXt <- function(x) inherits(x, "POSIXt")
 #' x <- "blub"
 #' is.X.Date <- is.Date(x)#returns F
 is.Date <- function(x) inherits(x, "Date")
+
+
+#' Point To Image
+#'
+#' Transforms a 3 point based on a projection and
+#' world to camera matrix into the NPC space.
+#' @param x Vector in 3D.
+#' @param projection Matrix describing the camera projection.
+#' @param worldToCamera Matrix describing the camera position.
+#' @keywords Helper, projection, transformation, 3D vector
+#' @export
+#' @return x in NPC space.
+#' @examples
+#' x <- c(1,2,3)
+#' projection <- matrix(c(1,0,0,0,0,1,0,0,0,0,1,-1,0,0,0,1),nrow=4,ncol = 4, byrow = TRUE)
+#' worldToCamera <- matrix(c(-1,0,0,-25,0,0,-1,0,0,1,0,-30,0,0,0,1),nrow=4,ncol = 4, byrow = TRUE)
+#' npc_coordinates <- point2image(x)
+point2image <- function(x, projection, worldToCamera){
+  projection %*% worldToCamera %*% as.vector(x)
+}
+
+
+#' Transform 3D Positions To Image
+#'
+#' Takes an data.frame of positions (coded with x,y,z)
+#' and returns their position in NPC space.
+#'
+#' Note: Suggestion by https://stackoverflow.com/a/26413765
+#' @param x Path data.
+#' @param projection Matrix describing the camera projection.
+#' @param worldToCamera Matrix describing the camera position.
+#' @keywords Helper, path transformation, NPC projection
+#' @export
+#' @return Returns transformed path.
+#' @examples
+#' projection <- matrix(c(1,0,0,0,0,1,0,0,0,0,1,-1,0,0,0,1),nrow=4,ncol = 4, byrow = TRUE)
+#' worldToCamera <- matrix(c(-1,0,0,-25,0,0,-1,0,0,1,0,-30,0,0,0,1),nrow=4,ncol = 4, byrow = TRUE)
+#' position_data <- get_participants_positions_XYZ(db = db, session.ids = session.ids, scene.name = scene.name )
+#' position_data <- transform_3d_positions_to_image(position_data,projection,worldToCamera)
+transform_3d_positions_to_image <-function(position_data,projection,worldToCamera){
+
+  dt <- apply(data.table(with(position_data,data.frame(x,y,z,1))),1,point2image,projection,worldToCamera)
+
+  position_data$x <- dt[1,]
+  position_data$y <- dt[2,]
+  position_data$z <- dt[3,]
+
+  return(position_data)
+}

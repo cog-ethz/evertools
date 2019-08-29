@@ -17,7 +17,7 @@ normal_plots(samples, variable.name = "", scene.name = "")
 ggplot2 graph
 }
 \description{
-This function provides a normal Q-Q  and P-P plot with 
+This function provides a normal Q-Q  and P-P plot with
 ggplot2 with labeling
 }
 \examples{

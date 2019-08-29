@@ -9,11 +9,23 @@ histogram_density_plot_variable(data = NULL, bin.width = 50,
   legend.name = "", legend.labels = NULL, condition.name = "")
 }
 \arguments{
-\item{samples}{Data points to be qq plotted.}
+\item{data}{Data points to be qq plotted.}
 
-\item{variable.name}{Name of the variable which is ploted}
+\item{bin.width}{Used to compute density.}
 
-\item{scene.name}{Name of the scene that is ploted}
+\item{alpha}{How transparent the curve is.}
+
+\item{x.var}{Variable to be histogrammed.}
+
+\item{x.name}{Variable name to be shown.}
+
+\item{grouping}{How to group distributions.}
+
+\item{legend.name}{Title of the legend.}
+
+\item{condition.name}{Title of the graph addition.}
+
+\item{legend.label}{New labels for the legend (optional).}
 }
 \value{
 A table with session ids and durations.
@@ -23,28 +35,6 @@ This function provides a box plot of a variable.
 }
 \details{
 It can be separated by scene and a controling factor
-}
-\examples{
-#Box plot without variable subgroupings
-box_plot_variable(test, 
-                  y.var = "path_length", 
-                  x.var = "scene_name", 
-                  grouping = "scene_id", 
-                  y.name = "Path Length", 
-                  x.name = "Scene", 
-                  group.label = c("Training","City"))
-#Box plot with variable subgroupings
-box_plot_variable(test,
-                  y.var = "path_length",
-                  x.var = "scene_name",
-                  grouping = "scene_id + sex",
-                  coloring = "sex",
-                  y.name = "Path Length",
-                  x.name = "Scene",
-                  group.label = c("Training","City"),
-                  legend.name = "Sex",
-                  legend.label = c("TRUE"="Female", "FALSE"="Male"))
-
 }
 \keyword{EVE,}
 \keyword{evaluation,}

@@ -13,5 +13,10 @@ Imports:
     dbplyr,
     dplyr,
     ggplot2,
-    tidyr
+    tidyr,
+    data.table,
+    grid,
+    viridis,
+    XML,
+    png
 RoxygenNote: 6.1.1.9000

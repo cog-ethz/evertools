@@ -12,7 +12,6 @@
 #' positions <- get_participant_duration(db, session.id = 5, scene.name "Tolman_01")
 #'
 get_participant_duration <- function(db, session.id = 1, scene.name = "Tolman_01"){
-  device_id <- get_sensor_id_by_name(db,"euler_angles")
   time_info <- get_session_scene_time_information(db = db,
                                                   session.id = session.id,
                                                   scene.name = scene.name)
