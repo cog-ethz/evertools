@@ -159,3 +159,74 @@ transform_3d_positions_to_image <-function(position_data,projection,worldToCamer
 
   return(position_data)
 }
+
+#' Angle
+#'
+#' Computes the angle between two vectors.
+#'
+#' Note: Suggestion by https://stackoverflow.com/a/26413765
+#' @param x First vector.
+#' @param y Second vector.
+#' @keywords Helper, angle, vectors
+#' @export
+#' @return Returns angle between vectors.
+#' @examples
+#' x = c(1,2,3)
+#' y = c(4,5,6)
+#' angle(x,y)
+angle <- function(x,y){
+  dot.prod <- x%*%y
+  norm.x <- norm(x,type="2")
+  norm.y <- norm(y,type="2")
+  theta <- acos(dot.prod / (norm.x * norm.y))
+  return(rad2deg(theta))
+}
+
+#' Angle 2D
+#'
+#' Computes the angle between two 2D vectors.
+#'
+#' Note: Suggestion by https://stackoverflow.com/a/26413765
+#' @param x First vector.
+#' @param y Second vector.
+#' @keywords Helper, angle, vectors
+#' @export
+#' @return Returns angle between vectors.
+#' @examples
+#' x = c(1,3)
+#' y = c(4,6)
+#' angle_2d(x,y)
+angle_2d <- function(x,y){
+  angle = atan2(y[2], y[1]) - atan2(x[2], x[1]);
+  angle = rad2deg(angle)
+  if (angle > 180){
+    angle = angle - 360
+  } else if (angle < -180) {
+    angle = angle + 360
+  }
+  return (angle)
+}
+
+#' Radian To Degree
+#'
+#' Transform radian to degree.
+#'
+#' Note: Suggestion by https://stackoverflow.com/questions/32370485/
+#' @param rad radian to be converted.
+#' @keywords Helper, angle, unit
+#' @export
+#' @return Degrees computed.
+#' @examples
+rad2deg <- function(rad) {(rad * 180) / (pi)}
+
+#' Degree To Radian
+#'
+#' Transform degree to radian.
+#'
+#' Note: Suggestion by https://stackoverflow.com/questions/32370485/
+#' @param deg degrees to be converted.
+#' @keywords Helper, angle, unit
+#' @export
+#' @return Radians computed.
+#' @examples
+deg2rad <- function(deg) {(deg * pi) / (180)}
