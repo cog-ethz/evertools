@@ -84,8 +84,8 @@ compute_jrd_2d_error <- function(jrd_data, destinations){
                                                                               ifelse(value==4  & correct_angles <0,correct_angles+180,correct_angles-180))))))))
 
   jrd_data$error2 <- with(jrd_data,ifelse(error > -22.5 & error < 22.6,0,
-                                            ifelse(error > -67.5 & error < 67.5,1,
-                                                   ifelse(error > -112.5 & error < 112.5,2,
+                                            ifelse(error > -67.5 & error < 67.5,ifelse(error < 0,-1,1),
+                                                   ifelse(error > -112.5 & error < 112.5,ifelse(error < 0,-2,2),
                                                           ifelse(error > -147.5 & error < -147.5,3,4)))))
 
   return(with(jrd_data,error2))
