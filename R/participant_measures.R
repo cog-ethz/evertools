@@ -5,6 +5,7 @@
 #'
 #' @param jrd_data Data.frame containing the task combo as indices into the destinations list in the description, the result in the value
 #' @param destinations Data.frame containing the destination name in description and an x,y,z coordinate for each.
+#' @param sep The symbol separating goal, position and direction in the string.
 #' @keywords JRD, angular error
 #' @export
 #' @examples
@@ -17,9 +18,9 @@
 #'
 #' jrd_data$error <- compute_jrd_3d_error(jrd_data, destinations)
 #'
-compute_jrd_3d_error <- function(jrd_data, destinations){
+compute_jrd_3d_error <- function(jrd_data, destinations, sep=""){
   jrd_data$value <- as.numeric(jrd_data$value)
-  cols <- data.frame(t(as.data.frame(lapply(strsplit(jrd_data$description,""),as.numeric))))+1
+  cols <- data.frame(t(as.data.frame(lapply(strsplit(jrd_data$description,sep),as.numeric))))+1
   names(cols) <- c("Goal","Position","Direction")
 
   jrd_data <- cbind(jrd_data,cols)
@@ -45,6 +46,7 @@ compute_jrd_3d_error <- function(jrd_data, destinations){
 #'
 #' @param jrd_data Data.frame containing the task combo as indices into the destinations list in the description, the result in the value
 #' @param destinations Data.frame containing the destination name in description and an x,y,z coordinate for each.
+#' @param sep The symbol separating goal, position and direction in the string.
 #' @keywords JRD, angle group error
 #' @export
 #' @examples
@@ -58,9 +60,9 @@ compute_jrd_3d_error <- function(jrd_data, destinations){
 #'
 #' jrd_data$error <- compute_jrd_3d_error(jrd_data, destinations)
 #'
-compute_jrd_2d_error <- function(jrd_data, destinations){
+compute_jrd_2d_error <- function(jrd_data, destinations,sep=""){
   jrd_data$value <- as.numeric(jrd_data$value)
-  cols <- data.frame(t(as.data.frame(lapply(strsplit(jrd_data$description,""),as.numeric))))+1
+  cols <- data.frame(t(as.data.frame(lapply(strsplit(jrd_data$description,sep),as.numeric))))+1
   names(cols) <- c("Goal","Position","Direction")
 
   jrd_data <- cbind(jrd_data,cols)
